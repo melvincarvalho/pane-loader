@@ -14,7 +14,7 @@ Locally:
 node serve.js          # http://localhost:8012/
 ```
 
-Open http://localhost:8012/demo.html. It runs released SolidOS (mashlib 3.0.0, from a CDN) on a public folder. Press **Load hello-pane.js**: the pane is imported, registered (36 panes become 37) and shown.
+Open http://localhost:8012/demo.html. It runs released SolidOS (mashlib 3.0.0, from a CDN) on the SolidOS team's public 2026 minutes folder. Press **Add a calendar view**, at the bottom: the pane is imported from its URL, registered (36 panes become 37) and shown, and the button becomes a Folder / Calendar switch.
 
 ## Use it
 
@@ -50,7 +50,7 @@ A pane that fails to import, is not a pane, or clashes with a different pane of 
 
 ## Write a pane
 
-See [examples/hello-pane.js](examples/hello-pane.js). Rules for a pane that is loaded and not built in:
+Two examples: [examples/hello-pane.js](examples/hello-pane.js), the smallest possible pane, and [examples/meetings-pane.js](examples/meetings-pane.js), a calendar view for a folder of dated documents. Rules for a pane that is loaded and not built in:
 
 - Export the pane as the module's default export.
 - Import nothing from SolidOS. Take the store, the session and the document from the `context` passed to `label` and `render`. A second copy of solid-logic would have its own empty store and no login.

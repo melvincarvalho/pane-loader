@@ -16,6 +16,33 @@
   <meta property="og:image:alt" content="pane-loader: add a view to SolidOS from one file at a URL">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <script>
+    // SolidOS expects to be installed at the root of its site, and asks for its extra files
+    // (lazy parts and the login worker) at "/". This page lives in a folder, so send those
+    // requests to the copies beside this page. Nothing else about SolidOS is touched.
+    (function () {
+      var here = new URL('.', location.href).href
+      if (here === location.origin + '/') return   // already at the root: nothing to do
+      var files = ['799.js', '841.js', '5fb2ef310e691f59285b.js', 'a9c30b64ceaae48b72f0.js']
+      function fix (u) {
+        try {
+          var url = new URL(u, location.href)
+          if (url.origin === location.origin && files.indexOf(url.pathname.slice(1)) !== -1) return here + url.pathname.slice(1)
+        } catch (e) {}
+        return u
+      }
+      var Shared = window.SharedWorker
+      if (Shared) {
+        window.SharedWorker = function (url, options) { return new Shared(fix(String(url)), options) }
+        window.SharedWorker.prototype = Shared.prototype
+      }
+      var src = Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src')
+      Object.defineProperty(HTMLScriptElement.prototype, 'src', {
+        configurable: true, enumerable: true, get: src.get,
+        set: function (value) { src.set.call(this, fix(String(value))) }
+      })
+    })()
+  </script>
   <!-- Released SolidOS, unmodified, from a public CDN. -->
   <link href="https://unpkg.com/mashlib@3.0.0/dist/mash.css" rel="stylesheet">
   <script defer src="https://unpkg.com/mashlib@3.0.0/dist/mashlib.min.js"></script>

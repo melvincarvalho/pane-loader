@@ -59,7 +59,7 @@ Two examples: [examples/hello-pane.js](examples/hello-pane.js), the smallest pos
 
 ## Files that belong to SolidOS
 
-`799.js`, `841.js`, `5fb2ef310e691f59285b.js` and `a9c30b64ceaae48b72f0.js` are not part of the loader. They are the extra pieces of mashlib 3.0.0 (MIT, from https://unpkg.com/mashlib@3.0.0/dist/), which SolidOS fetches from the folder of the page that hosts it. They sit here only so that the demo page starts SolidOS without errors.
+`799.js`, `841.js`, `5fb2ef310e691f59285b.js` and `a9c30b64ceaae48b72f0.js` are not part of the loader. They are the extra pieces of mashlib 3.0.0 (MIT, from https://unpkg.com/mashlib@3.0.0/dist/), which SolidOS fetches from the folder of the page that hosts it. They sit here only so that the demo page starts SolidOS without errors. SolidOS asks for them at the root of its site (`/799.js`), and its login check waits five seconds each time its worker file is missing there. The demo lives in a folder, so `demo.html` starts with a few lines that send those four requests to the copies beside the page.
 
 ## What is tested, and what is not
 

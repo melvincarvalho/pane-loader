@@ -1,0 +1,8 @@
+{
+  "name": "pane-loader",
+  "version": "0.0.1",
+  "description": "Load SolidOS panes at run time from URLs",
+  "type": "module",
+  "private": true,
+  "scripts": { "serve": "node serve.js" }
+}

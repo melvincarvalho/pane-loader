@@ -29,6 +29,7 @@
     #demo button { font: inherit; font-weight: 600; padding: 11px 24px; border-radius: 999px; border: 0; background: transparent; color: #1d1d1f; cursor: pointer;
       transition: background .2s, color .2s }
     #demo button.on { background: #7c4dff; color: #fff }
+    #demo button:disabled { color: #86868b; font-weight: 500; cursor: default }
     #demo button:focus-visible { outline: 2px solid #7c4dff; outline-offset: 2px }
     #demo small { font-size: 12px; color: #86868b }
     #demo small a { color: inherit }
@@ -44,7 +45,7 @@
 
   <div id="demo">
     <div class="box">
-      <button id="demo-load" class="on">Add a calendar view</button>
+      <button id="demo-load" disabled>Starting SolidOS…</button>
       <button id="demo-folder" hidden>Folder</button>
       <button id="demo-pane" class="on" hidden>Calendar</button>
     </div>
@@ -59,6 +60,17 @@
     const PANE = new URL('examples/meetings-pane.js', location.href.split('?')[0]).href
     const $ = id => document.getElementById(id)
     let name = null
+
+    // The button says "Starting SolidOS…" until the folder is on screen (or 20 s have passed).
+    function ready () {
+      const b = $('demo-load')
+      if (!b.disabled) return
+      b.disabled = false; b.classList.add('on'); b.textContent = 'Add a calendar view'
+    }
+    const watch = setInterval(() => {
+      if (document.querySelectorAll('#OutlineView tr').length > 1) { clearInterval(watch); ready() }
+    }, 100)
+    setTimeout(() => { clearInterval(watch); ready() }, 20000)
 
     addEventListener('load', () => {
       window.panes.runDataBrowser(SUBJECT)

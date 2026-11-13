@@ -57,6 +57,10 @@ Two examples: [examples/hello-pane.js](examples/hello-pane.js), the smallest pos
 - Refer to your own files (icon, styles) relative to the module: `new URL('hello.svg', import.meta.url).href`.
 - Serve the module as JavaScript with cross-origin access allowed, as GitHub Pages and most pods do.
 
+## Files that belong to SolidOS
+
+`799.js`, `841.js`, `5fb2ef310e691f59285b.js` and `a9c30b64ceaae48b72f0.js` are not part of the loader. They are the extra pieces of mashlib 3.0.0 (MIT, from https://unpkg.com/mashlib@3.0.0/dist/), which SolidOS fetches from the folder of the page that hosts it. They sit here only so that the demo page starts SolidOS without errors.
+
 ## What is tested, and what is not
 
 Tested 13 November 2026 against mashlib 3.0.0:

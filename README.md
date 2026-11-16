@@ -50,7 +50,26 @@ A pane that fails to import, is not a pane, or clashes with a different pane of 
 
 ## Write a pane
 
-Two examples: [examples/hello-pane.js](examples/hello-pane.js), the smallest possible pane, and [examples/meetings-pane.js](examples/meetings-pane.js), a calendar view for a folder of dated documents. Rules for a pane that is loaded and not built in:
+Five examples, each one file that imports nothing:
+
+| Pane | Applies to | Shows |
+| --- | --- | --- |
+| [hello-pane.js](examples/hello-pane.js) | any folder | the smallest possible pane: how many things the folder lists |
+| [meetings-pane.js](examples/meetings-pane.js) | a folder with three or more dated files (`2026_11_04.md`) | the year month by month, each day opening that document |
+| [notes-pane.js](examples/notes-pane.js) | a Markdown file (`.md`) | the note as a readable page, with previous / next through the folder; opens first |
+| [gallery-pane.js](examples/gallery-pane.js) | a folder with three or more images | a grid, with a large viewer (arrow keys, Escape); opens first when the folder is mostly images |
+| [board-pane.js](examples/board-pane.js) | a document describing tasks (`schema:Action` with `actionStatus`) | a To do / Doing / Done board, read from the store; read-only |
+
+Try them together on [JSS](https://jss.live/docs/guides/dynamic-panes) 0.0.227 or later:
+
+```bash
+B=https://melvincarvalho.github.io/pane-loader/examples
+jss start --mashlib-cdn --panes $B/meetings-pane.js,$B/notes-pane.js,$B/gallery-pane.js,$B/board-pane.js
+```
+
+A pane that should be the first view of what it applies to adds `shouldGetFocus (subject) { return true }`; without it the pane is offered in the menu beside the built-in ones.
+
+Rules for a pane that is loaded and not built in:
 
 - Export the pane as the module's default export.
 - Import nothing from SolidOS. Take the store, the session and the document from the `context` passed to `label` and `render`. A second copy of solid-logic would have its own empty store and no login.
